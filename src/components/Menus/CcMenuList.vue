@@ -5,10 +5,12 @@
  */
 import type { CcMenuNode } from './CcMenus.vue'
 
-defineProps<{
+const props = defineProps<{
   nodes: CcMenuNode[]
   expandedIds: Set<number>
   value?: number | string
+  /** 是否显示嵌套缩进引导线（顶部下拉场景通常关闭）。 */
+  showIndentLine?: boolean
 }>()
 
 const emit = defineEmits<{
@@ -47,9 +49,11 @@ const emit = defineEmits<{
       <CcMenuList
         v-if="node.children && node.children.length > 0 && expandedIds.has(node.id)"
         class="cc-menus__list--nested"
+        :class="{ 'cc-menus__list--plain': showIndentLine === false }"
         :nodes="node.children"
         :expanded-ids="expandedIds"
         :value="value"
+        :show-indent-line="showIndentLine"
         @toggle="(id) => emit('toggle', id)"
         @select="(child) => emit('select', child)"
         @row-click="(child) => emit('row-click', child)"
@@ -73,6 +77,12 @@ const emit = defineEmits<{
   margin-left: 14px;
   padding-left: 10px;
   border-left: 1px solid var(--cc-hairline);
+}
+
+.cc-menus__list--plain {
+  margin-left: 14px;
+  padding-left: 10px;
+  border-left: none;
 }
 
 .cc-menus__row {

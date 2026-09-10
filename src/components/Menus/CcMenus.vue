@@ -37,6 +37,8 @@ export interface CcMenuNode {
 export interface CcMenusUser {
   displayName?: string
   username?: string
+  /** 用户头像图片地址；未提供时回退为姓名首字母圆形。 */
+  avatarUrl?: string
 }
 
 const props = withDefaults(
@@ -204,6 +206,7 @@ onMounted(() => {
         :nodes="tree"
         :expanded-ids="expandedIds"
         :value="activeMenuId"
+        :show-indent-line="false"
         @toggle="onToggle"
         @select="onSelect"
         @row-click="onRowClick"
@@ -241,6 +244,7 @@ onMounted(() => {
                 :nodes="node.children ?? []"
                 :expanded-ids="expandedIds"
                 :value="activeMenuId"
+                :show-indent-line="false"
                 @toggle="onToggle"
                 @select="onSelect"
                 @row-click="onRowClick"
@@ -267,7 +271,13 @@ onMounted(() => {
         aria-haspopup="menu"
         @click="userOpen = !userOpen"
       >
-        <span class="cc-menus__avatar">{{ userInitial }}</span>
+        <img
+          v-if="props.user?.avatarUrl"
+          class="cc-menus__avatar cc-menus__avatar--img"
+          :src="props.user.avatarUrl"
+          alt=""
+        />
+        <span v-else class="cc-menus__avatar">{{ userInitial }}</span>
         <span class="cc-menus__username">{{ userTitle }}</span>
         <svg
           class="cc-menus__caret"
@@ -467,6 +477,10 @@ onMounted(() => {
   background: var(--cc-primary);
 }
 
+.cc-menus__avatar--img {
+  object-fit: cover;
+}
+
 .cc-menus__username {
   max-width: 140px;
   overflow: hidden;
@@ -486,7 +500,10 @@ onMounted(() => {
   overflow: hidden;
 }
 
+/* 左侧布局：用户按钮贴近边栏右缘，向右展开避免溢出屏幕左侧。 */
 .cc-menus--left .cc-menus__dropdown--user {
+  right: auto;
+  left: 0;
   bottom: calc(100% + 8px);
   top: auto;
 }
