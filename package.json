@@ -1,26 +1,68 @@
 {
   "name": "common_component_library_vue",
-  "private": true,
   "version": "0.1.0",
+  "description": "Vue 3 + TypeScript + Vite 通用组件库，视觉规范由 DESIGN.md（Stripe 风格）定义，包含 15 个可复用组件",
   "type": "module",
+  "main": "./dist-lib/common-component-library-vue.umd.js",
+  "module": "./dist-lib/common-component-library-vue.mjs",
+  "types": "./dist-lib/types/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist-lib/types/index.d.ts",
+      "import": "./dist-lib/common-component-library-vue.mjs",
+      "require": "./dist-lib/common-component-library-vue.umd.js"
+    },
+    "./styles/tokens.css": "./src/styles/tokens.css",
+    "./styles/base.css": "./src/styles/base.css",
+    "./DESIGN.md": "./DESIGN.md",
+    "./package.json": "./package.json"
+  },
   "files": [
-    "dist",
     "dist-lib",
     "DESIGN.md",
     "src/styles"
   ],
+  "keywords": [
+    "vue",
+    "vue3",
+    "typescript",
+    "component-library",
+    "design-system",
+    "design.md",
+    "stripe",
+    "ui",
+    "vite"
+  ],
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mutou101/common_component_library_vue.git"
+  },
+  "homepage": "https://github.com/mutou101/common_component_library_vue#readme",
+  "bugs": {
+    "url": "https://github.com/mutou101/common_component_library_vue/issues"
+  },
+  "sideEffects": [
+    "**/*.css",
+    "**/tokens.css",
+    "**/base.css"
+  ],
   "scripts": {
     "dev": "vite",
     "build": "vue-tsc -b && vite build",
-    "build:lib": "vue-tsc -b && vite build --config vite.lib.config.ts",
+    "build:lib": "vue-tsc -b && vite build --config vite.lib.config.ts && vue-tsc -p tsconfig.lib.json",
     "preview": "vite preview",
-    "typecheck": "vue-tsc -b --noEmit"
+    "typecheck": "vue-tsc -b --noEmit",
+    "prepublishOnly": "npm run build:lib"
   },
   "dependencies": {
-    "@fontsource/inter": "^5.3.0",
     "vue": "^3.5.41"
   },
+  "peerDependencies": {
+    "vue": "^3.4.0"
+  },
   "devDependencies": {
+    "@fontsource/inter": "^5.3.0",
     "@types/node": "^24.13.3",
     "@vitejs/plugin-vue": "^6.0.8",
     "@vue/tsconfig": "^0.9.1",
