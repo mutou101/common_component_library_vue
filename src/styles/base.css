@@ -1,0 +1,79 @@
+/* ==========================================================================
+   Base styles — Stripe-inspired design language
+   ========================================================================== */
+
+@import "./tokens.css";
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: var(--cc-font-family);
+  font-weight: 300;
+  font-size: 15px;
+  line-height: 1.4;
+  color: var(--cc-ink);
+  background-color: var(--cc-canvas);
+  /* The brand enables the ss01 stylistic set globally on the body element */
+  font-feature-settings: "ss01";
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin: 0;
+  font-weight: 300;
+  color: var(--cc-ink);
+}
+
+p {
+  margin: 0;
+}
+
+a {
+  color: var(--cc-primary);
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+::selection {
+  background-color: var(--cc-ink);
+  color: #f2f2f2;
+}
+
+/* Numeric / money cells — tabular figures are the brand's quiet financial signal */
+.tnum,
+.tnum * {
+  font-feature-settings: "tnum";
+  font-variant-numeric: tabular-nums;
+}
+
+/* Utility: type roles */
+.cc-text-display-xxl { font-size: 56px; line-height: 1.03; font-weight: 300; letter-spacing: -1.4px; }
+.cc-text-display-xl { font-size: 48px; line-height: 1.15; font-weight: 300; letter-spacing: -0.96px; }
+.cc-text-display-lg { font-size: 32px; line-height: 1.1; font-weight: 300; letter-spacing: -0.64px; }
+.cc-text-display-md { font-size: 26px; line-height: 1.12; font-weight: 300; letter-spacing: -0.26px; }
+.cc-text-heading-lg { font-size: 22px; line-height: 1.1; font-weight: 300; letter-spacing: -0.22px; }
+.cc-text-heading-md { font-size: 20px; line-height: 1.4; font-weight: 300; letter-spacing: -0.2px; }
+.cc-text-heading-sm { font-size: 18px; line-height: 1.4; font-weight: 300; }
+.cc-text-body-lg { font-size: 16px; line-height: 1.4; font-weight: 300; }
+.cc-text-body-md { font-size: 15px; line-height: 1.4; font-weight: 300; }
+.cc-text-caption { font-size: 13px; line-height: 1.4; font-weight: 400; letter-spacing: -0.39px; font-feature-settings: "tnum"; }
+.cc-text-micro { font-size: 11px; line-height: 1.4; font-weight: 300; }
+.cc-text-micro-cap { font-size: 10px; line-height: 1.15; font-weight: 400; letter-spacing: 0.1px; text-transform: uppercase; }

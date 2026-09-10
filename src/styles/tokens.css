@@ -1,0 +1,104 @@
+/* ==========================================================================
+   DESIGN TOKENS — Stripe-inspired design language
+   Source: DESIGN.md (root) · extracted from Stripe by VoltAgent/awesome-design-md
+   Fonts: Sohne (proprietary) → Inter at weight 300 is the open-source substitute
+   ========================================================================== */
+
+:root {
+  /* ------------------------------------------------------------------ *
+   * Colors
+   * ------------------------------------------------------------------ */
+
+  /* Brand & Accent */
+  --cc-primary: #533afd;                 /* {colors.primary} — signature CTA indigo */
+  --cc-primary-deep: #4434d4;            /* {colors.primary-deep} — gradient mid-stop, press alternative */
+  --cc-primary-press: #2e2b8c;           /* {colors.primary-press} — pressed state */
+  --cc-primary-soft: #665efd;            /* {colors.primary-soft} — lighter indigo for accents */
+  --cc-primary-subdued: #b9b9f9;         /* {colors.primary-bg-subdued-hover} — soft tag fill */
+  --cc-brand-dark-900: #1c1e54;          /* {colors.brand-dark-900} — deep navy, dark surfaces */
+  --cc-ruby: #ea2261;                    /* {colors.ruby} — gradient accent, never a button */
+  --cc-magenta: #f96bee;                 /* {colors.magenta} — gradient stop */
+  --cc-lemon: #9b6829;                   /* {colors.lemon} — warm sherbet gradient stop */
+
+  /* Surface */
+  --cc-canvas: #ffffff;                  /* {colors.canvas} — default page background */
+  --cc-canvas-soft: #f6f9fc;             /* {colors.canvas-soft} — cool off-white feature band */
+  --cc-canvas-cream: #f5e9d4;            /* {colors.canvas-cream} — warm interlude band */
+  --cc-hairline: #e3e8ee;                /* {colors.hairline} — 1px card/table borders */
+  --cc-hairline-input: #a8c3de;          /* {colors.hairline-input} — cooler input border */
+
+  /* Text */
+  --cc-ink: #0d253d;                     /* {colors.ink} — default body text, deep navy */
+  --cc-ink-secondary: #273951;           /* {colors.ink-secondary} — secondary text */
+  --cc-ink-mute: #64748d;                /* {colors.ink-mute} — helper/caption text */
+  --cc-ink-mute-2: #61718a;              /* {colors.ink-mute-2} — nav text */
+  --cc-on-primary: #ffffff;              /* {colors.on-primary} — text on indigo/navy */
+
+  /* Semantic (dashboard-product UI; not part of the marketing palette) */
+  --cc-success: #0a9f6e;
+  --cc-success-soft: #e3f5ee;
+  --cc-warning: #9b6829;                 /* reuses {colors.lemon} tone */
+  --cc-warning-soft: #faf0e0;
+  --cc-error: #ea2261;                   /* reuses {colors.ruby} tone */
+  --cc-error-soft: #fde7ef;
+  --cc-info: #533afd;                    /* reuses {colors.primary} */
+
+  /* Shadows */
+  --cc-shadow-blue: #003770;             /* {colors.shadow-blue} — shadow tint */
+  --cc-shadow-level-1: rgba(0, 55, 112, 0.08) 0 1px 3px;
+  --cc-shadow-level-2: rgba(0, 55, 112, 0.08) 0 8px 24px, rgba(0, 55, 112, 0.04) 0 2px 6px;
+  --cc-focus-ring: 0 0 0 3px rgba(83, 58, 253, 0.18);
+
+  /* ------------------------------------------------------------------ *
+   * Typography
+   * ------------------------------------------------------------------ */
+  --cc-font-family: "Inter", "SF Pro Display", system-ui, -apple-system,
+    "Segoe UI", sans-serif;
+  --cc-font-mono: ui-monospace, "SF Mono", SFMono-Regular, Menlo, Consolas,
+    monospace;
+
+  /* Display tier — weight 300, negative tracking is the brand signature */
+  --cc-text-display-xxl: 56px / 1.03 300 -1.4px;
+  --cc-text-display-xl: 48px / 1.15 300 -0.96px;
+  --cc-text-display-lg: 32px / 1.1 300 -0.64px;
+  --cc-text-display-md: 26px / 1.12 300 -0.26px;
+  --cc-text-heading-lg: 22px / 1.1 300 -0.22px;
+  --cc-text-heading-md: 20px / 1.4 300 -0.2px;
+  --cc-text-heading-sm: 18px / 1.4 300 0;
+  --cc-text-body-lg: 16px / 1.4 300 0;
+  --cc-text-body-md: 15px / 1.4 300 0;
+  --cc-text-body-tabular: 14px / 1.4 300 -0.42px; /* tnum for money/numerics */
+  --cc-text-button-md: 16px / 1 400 0;
+  --cc-text-button-sm: 14px / 1 400 0;
+  --cc-text-caption: 13px / 1.4 400 -0.39px;      /* tnum */
+  --cc-text-micro: 11px / 1.4 300 0;
+  --cc-text-micro-cap: 10px / 1.15 400 0.1px;     /* all-caps eyebrow */
+
+  /* ------------------------------------------------------------------ *
+   * Radius
+   * ------------------------------------------------------------------ */
+  --cc-radius-xs: 4px;
+  --cc-radius-sm: 6px;   /* form inputs */
+  --cc-radius-md: 8px;   /* compact cards, alerts */
+  --cc-radius-lg: 12px;  /* pricing / feature cards */
+  --cc-radius-xl: 16px;  /* dashboard chrome */
+  --cc-radius-pill: 9999px; /* all buttons, tag pills */
+
+  /* ------------------------------------------------------------------ *
+   * Spacing (base unit 8px)
+   * ------------------------------------------------------------------ */
+  --cc-space-xxs: 2px;
+  --cc-space-xs: 4px;
+  --cc-space-sm: 8px;
+  --cc-space-md: 12px;
+  --cc-space-lg: 16px;
+  --cc-space-xl: 24px;
+  --cc-space-xxl: 32px;
+  --cc-space-huge: 64px;
+
+  /* ------------------------------------------------------------------ *
+   * Layout
+   * ------------------------------------------------------------------ */
+  --cc-container-max: 1200px;
+  --cc-input-height: 40px;
+}
