@@ -1,0 +1,47 @@
+/* ==========================================================================
+   THEME · Vercel — monochrome minimal, near-black CTA
+   Source: awesome-design-md/vercel/DESIGN.md
+   Apply by setting <html data-cc-theme="vercel"> (or CcThemeProvider / setTheme).
+   ========================================================================== */
+
+[data-cc-theme='vercel'] {
+  /* Brand & Accent */
+  --cc-primary: #171717;
+  --cc-primary-deep: #000000;
+  --cc-primary-press: #000000;
+  --cc-primary-soft: #444444;
+  --cc-primary-subdued: #eaeaea;
+  --cc-brand-dark-900: #0a0a0a;
+  --cc-ruby: #ee0000;
+  --cc-magenta: #f81ce5;
+  --cc-lemon: #f5a623;
+
+  /* Surface */
+  --cc-canvas: #ffffff;
+  --cc-canvas-soft: #fafafa;
+  --cc-canvas-cream: #f5f5f5;
+  --cc-hairline: #eaeaea;
+  --cc-hairline-input: #d4d4d4;
+
+  /* Text */
+  --cc-ink: #171717;
+  --cc-ink-secondary: #4d4d4d;
+  --cc-ink-mute: #888888;
+  --cc-ink-mute-2: #666666;
+  --cc-on-primary: #ffffff;
+
+  /* Semantic */
+  --cc-success: #0070f3;
+  --cc-success-soft: #e8f3ff;
+  --cc-warning: #f5a623;
+  --cc-warning-soft: #fdf3e3;
+  --cc-error: #ee0000;
+  --cc-error-soft: #fbeaea;
+  --cc-info: #0070f3;
+
+  /* Shadows */
+  --cc-shadow-blue: #000000;
+  --cc-shadow-level-1: rgba(0, 0, 0, 0.06) 0 1px 3px;
+  --cc-shadow-level-2: rgba(0, 0, 0, 0.06) 0 8px 24px, rgba(0, 0, 0, 0.03) 0 2px 6px;
+  --cc-focus-ring: 0 0 0 3px rgba(0, 112, 243, 0.25);
+}

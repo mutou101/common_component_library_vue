@@ -1,0 +1,47 @@
+/* ==========================================================================
+   THEME · Linear — deep-dark, lavender accent
+   Source: awesome-design-md/linear.app/DESIGN.md
+   Apply by setting <html data-cc-theme="linear"> (or CcThemeProvider / setTheme).
+   ========================================================================== */
+
+[data-cc-theme='linear'] {
+  /* Brand & Accent */
+  --cc-primary: #5e6ad2;
+  --cc-primary-deep: #4f5ab8;
+  --cc-primary-press: #3d4798;
+  --cc-primary-soft: #828fff;
+  --cc-primary-subdued: #2a2e4a;
+  --cc-brand-dark-900: #0b0b0c;
+  --cc-ruby: #f25e5e;
+  --cc-magenta: #f5a3c7;
+  --cc-lemon: #d8b4fe;
+
+  /* Surface */
+  --cc-canvas: #010102;
+  --cc-canvas-soft: #0f1011;
+  --cc-canvas-cream: #141516;
+  --cc-hairline: #2a2d33;
+  --cc-hairline-input: #3a3e45;
+
+  /* Text */
+  --cc-ink: #f7f8f8;
+  --cc-ink-secondary: #d0d6e0;
+  --cc-ink-mute: #8a8f98;
+  --cc-ink-mute-2: #62666d;
+  --cc-on-primary: #ffffff;
+
+  /* Semantic */
+  --cc-success: #3ddc97;
+  --cc-success-soft: #14322a;
+  --cc-warning: #d8b4fe;
+  --cc-warning-soft: #2c2440;
+  --cc-error: #f25e5e;
+  --cc-error-soft: #3a1d1d;
+  --cc-info: #5e6ad2;
+
+  /* Shadows */
+  --cc-shadow-blue: #000000;
+  --cc-shadow-level-1: rgba(0, 0, 0, 0.5) 0 1px 3px;
+  --cc-shadow-level-2: rgba(0, 0, 0, 0.5) 0 8px 24px, rgba(0, 0, 0, 0.3) 0 2px 6px;
+  --cc-focus-ring: 0 0 0 3px rgba(94, 106, 210, 0.35);
+}

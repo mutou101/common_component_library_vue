@@ -1,0 +1,47 @@
+/* ==========================================================================
+   THEME · Notion — paper light, indigo CTA
+   Source: awesome-design-md/notion/DESIGN.md
+   Apply by setting <html data-cc-theme="notion"> (or CcThemeProvider / setTheme).
+   ========================================================================== */
+
+[data-cc-theme='notion'] {
+  /* Brand & Accent */
+  --cc-primary: #5645d4;
+  --cc-primary-deep: #4534b3;
+  --cc-primary-press: #3a2a99;
+  --cc-primary-soft: #6f5fe8;
+  --cc-primary-subdued: #e9e7fb;
+  --cc-brand-dark-900: #0a1530;
+  --cc-ruby: #eb5757;
+  --cc-magenta: #eb5757;
+  --cc-lemon: #b76e00;
+
+  /* Surface */
+  --cc-canvas: #ffffff;
+  --cc-canvas-soft: #f7f7f5;
+  --cc-canvas-cream: #f1f1ef;
+  --cc-hairline: #e3e3e0;
+  --cc-hairline-input: #d0d0cc;
+
+  /* Text */
+  --cc-ink: #37352f;
+  --cc-ink-secondary: #4f4d47;
+  --cc-ink-mute: #9b9a97;
+  --cc-ink-mute-2: #787774;
+  --cc-on-primary: #ffffff;
+
+  /* Semantic */
+  --cc-success: #0a9f6e;
+  --cc-success-soft: #e4f5ee;
+  --cc-warning: #b76e00;
+  --cc-warning-soft: #faf1e2;
+  --cc-error: #eb5757;
+  --cc-error-soft: #fdeaea;
+  --cc-info: #0075de;
+
+  /* Shadows */
+  --cc-shadow-blue: #0a1530;
+  --cc-shadow-level-1: rgba(10, 21, 48, 0.08) 0 1px 3px;
+  --cc-shadow-level-2: rgba(10, 21, 48, 0.08) 0 8px 24px, rgba(10, 21, 48, 0.04) 0 2px 6px;
+  --cc-focus-ring: 0 0 0 3px rgba(86, 69, 212, 0.22);
+}

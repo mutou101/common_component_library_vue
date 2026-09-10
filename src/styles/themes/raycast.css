@@ -1,0 +1,47 @@
+/* ==========================================================================
+   THEME · Raycast — dark shell, white CTA
+   Source: awesome-design-md/raycast/DESIGN.md
+   Apply by setting <html data-cc-theme="raycast"> (or CcThemeProvider / setTheme).
+   ========================================================================== */
+
+[data-cc-theme='raycast'] {
+  /* Brand & Accent */
+  --cc-primary: #ffffff;
+  --cc-primary-deep: #e8e8e8;
+  --cc-primary-press: #d6d6d6;
+  --cc-primary-soft: #ffffff;
+  --cc-primary-subdued: #3a3a3c;
+  --cc-brand-dark-900: #111113;
+  --cc-ruby: #ff6363;
+  --cc-magenta: #ff8d70;
+  --cc-lemon: #f5c451;
+
+  /* Surface */
+  --cc-canvas: #151516;
+  --cc-canvas-soft: #1c1c1e;
+  --cc-canvas-cream: #222224;
+  --cc-hairline: #303033;
+  --cc-hairline-input: #3f3f42;
+
+  /* Text */
+  --cc-ink: #f4f4f6;
+  --cc-ink-secondary: #cdcdcd;
+  --cc-ink-mute: #9c9c9d;
+  --cc-ink-mute-2: #6a6b6c;
+  --cc-on-primary: #000000;
+
+  /* Semantic */
+  --cc-success: #3ddc97;
+  --cc-success-soft: #17352b;
+  --cc-warning: #f5c451;
+  --cc-warning-soft: #3a3118;
+  --cc-error: #ff6363;
+  --cc-error-soft: #3c1d1d;
+  --cc-info: #ffffff;
+
+  /* Shadows */
+  --cc-shadow-blue: #000000;
+  --cc-shadow-level-1: rgba(0, 0, 0, 0.6) 0 1px 3px;
+  --cc-shadow-level-2: rgba(0, 0, 0, 0.6) 0 8px 24px, rgba(0, 0, 0, 0.4) 0 2px 6px;
+  --cc-focus-ring: 0 0 0 3px rgba(255, 99, 99, 0.35);
+}

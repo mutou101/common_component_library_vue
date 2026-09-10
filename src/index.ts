@@ -30,6 +30,7 @@ import CcTable from './components/Table/CcTable.vue'
 import CcBarChart from './components/Chart/CcBarChart.vue'
 import CcPieChart from './components/Chart/CcPieChart.vue'
 import CcLineChart from './components/Chart/CcLineChart.vue'
+import CcThemeProvider from './components/ThemeProvider/CcThemeProvider.vue'
 
 export {
   CcButton,
@@ -51,15 +52,23 @@ export {
   CcBarChart,
   CcPieChart,
   CcLineChart,
+  CcThemeProvider,
 }
 
 export type { CcSelectOption } from './components/Select/CcSelect.vue'
 export type { CcTableColumn, CcTableDensity } from './components/Table/CcTable.vue'
 export type { CcChartSeries, CcPieDatum } from './components/Chart/common'
+export type { CcTheme } from './theme'
+export { CC_THEMES, CC_THEME_LABELS, setTheme, getTheme, resetTheme } from './theme'
 
 /** Design tokens (CSS custom properties) 鈥?import once in your app entry */
 import './styles/tokens.css'
 import './styles/base.css'
+/** Multi-theme: Linear / Vercel / Notion / Raycast (default Stripe is in tokens.css) */
+import './styles/themes/linear.css'
+import './styles/themes/vercel.css'
+import './styles/themes/notion.css'
+import './styles/themes/raycast.css'
 
 /** Optional plugin for `app.use()` registration */
 export function install(app: App) {
@@ -83,6 +92,7 @@ export function install(app: App) {
     ['CcBarChart', CcBarChart],
     ['CcPieChart', CcPieChart],
     ['CcLineChart', CcLineChart],
+    ['CcThemeProvider', CcThemeProvider],
   ]
   for (const [name, component] of registry) {
     app.component(name, component as never)
@@ -111,6 +121,7 @@ export default {
     CcBarChart,
     CcPieChart,
     CcLineChart,
+    CcThemeProvider,
   },
 }
 

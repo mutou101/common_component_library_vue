@@ -5,6 +5,8 @@
  */
 import { reactive, ref } from 'vue'
 import {
+  CC_THEMES,
+  CC_THEME_LABELS,
   CcAlert,
   CcBadge,
   CcBarChart,
@@ -23,8 +25,23 @@ import {
   CcTag,
   CcTextarea,
   CcTooltip,
+  getTheme,
+  setTheme,
 } from './index'
-import type { CcTableColumn } from './index'
+import type { CcTableColumn, CcTheme } from './index'
+
+/* ------------------------------------------------------------------ */
+/* Theme switcher demo state                                          */
+/* ------------------------------------------------------------------ */
+const themeOptions = CC_THEMES.map((theme) => ({
+  label: CC_THEME_LABELS[theme],
+  value: theme,
+}))
+const currentTheme = ref<CcTheme>(getTheme())
+const onThemeChange = (value: string | number): void => {
+  currentTheme.value = value as CcTheme
+  setTheme(currentTheme.value)
+}
 
 /* ------------------------------------------------------------------ */
 /* Chart demo data                                                     */
@@ -247,6 +264,13 @@ function viewPatient(row: Record<string, unknown>) {
         <a href="#dashboard">Dashboard</a>
       </nav>
       <div class="nav__actions">
+        <CcSelect
+          :model-value="currentTheme"
+          :options="themeOptions"
+          class="theme-switcher"
+          aria-label="切换设计风格"
+          @update:model-value="onThemeChange"
+        />
         <CcButton variant="ghost" size="sm">Sign in</CcButton>
         <CcButton size="sm">Get started</CcButton>
       </div>
@@ -802,6 +826,10 @@ function viewPatient(row: Record<string, unknown>) {
   display: flex;
   align-items: center;
   gap: var(--cc-space-sm);
+}
+
+.theme-switcher {
+  min-width: 132px;
 }
 
 /* ------------------------------------------------------------------ */
