@@ -30,6 +30,12 @@ import {
 } from './index'
 import type { CcTableColumn, CcTheme } from './index'
 
+/* Multi-theme styles — 演示页显式引入（库入口已通过 index.ts 暴露） */
+import './styles/themes/linear.css'
+import './styles/themes/vercel.css'
+import './styles/themes/notion.css'
+import './styles/themes/raycast.css'
+
 /* ------------------------------------------------------------------ */
 /* Theme switcher demo state                                          */
 /* ------------------------------------------------------------------ */
