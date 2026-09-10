@@ -16,10 +16,12 @@ import {
   CcRadio,
   CcSelect,
   CcSwitch,
+  CcTable,
   CcTag,
   CcTextarea,
   CcTooltip,
 } from './index'
+import type { CcTableColumn } from './index'
 
 /* ------------------------------------------------------------------ */
 /* Demo state                                                          */
@@ -89,6 +91,119 @@ const typeScale = [
   { token: '{typography.caption}', size: '13px', weight: '400', ls: '-0.39px', sample: 'Processing · 4,210 transactions', cls: 'cc-text-caption' },
   { token: '{typography.micro-cap}', size: '10px', weight: '400', ls: '0.1px · caps', sample: 'Powered by the library', cls: 'cc-text-micro-cap' },
 ]
+
+/* ------------------------------------------------------------------ */
+/* Table demo data (CcTable)                                           */
+/* ------------------------------------------------------------------ */
+const patientNames = ['林晓彤', '陈国栋', '王雅静', '赵志强', '孙丽华', '周明轩', '吴芳', '郑浩然', '冯雨欣', '何俊杰']
+const departments = ['内科', '外科', '儿科', '骨科', '妇产科']
+const statuses = ['待就诊', '就诊中', '已完成']
+const genders = ['女', '男']
+const insuranceTypes = ['城镇职工', '城乡居民', '商业保险', '自费']
+const bloodTypes = ['A', 'B', 'AB', 'O']
+const wards = ['1号楼', '2号楼', '3号楼']
+const diagnoses = ['上呼吸道感染', '高血压', '糖尿病', '腰椎间盘突出', '急性阑尾炎', '骨折', '胃炎', '肺炎', '偏头痛', '湿疹']
+const doctors = ['李建国', '张丽华', '王志远', '刘思明', '陈晓峰']
+const nurses = ['赵敏', '钱静', '孙晓', '李娜']
+const statusTagVariant: Record<string, 'soft' | 'outline' | 'solid'> = {
+  待就诊: 'outline',
+  就诊中: 'solid',
+  已完成: 'soft',
+}
+
+const patients: Array<Record<string, unknown>> = Array.from({ length: 45 }, (_, i) => ({
+  id: i + 1,
+  name: `${patientNames[i % patientNames.length]}${Math.floor(i / patientNames.length) ? ` ${Math.floor(i / patientNames.length) + 1}` : ''}`,
+  gender: genders[i % genders.length],
+  age: 18 + ((i * 7) % 52),
+  dept: departments[i % departments.length],
+  status: statuses[i % statuses.length],
+  doctor: doctors[i % doctors.length],
+  nurse: nurses[i % nurses.length],
+  ward: wards[i % wards.length],
+  bed: `${String((i % 30) + 1).padStart(2, '0')}床`,
+  diagnosis: diagnoses[(i * 3) % diagnoses.length],
+  time: `2026-09-${String((i % 28) + 1).padStart(2, '0')} ${String(8 + (i % 10)).padStart(2, '0')}:30`,
+  fee: 120 + (i * 37) % 680,
+  insurance: insuranceTypes[i % insuranceTypes.length],
+  phone: `138${String(10000000 + i * 137913).slice(-8)}`,
+  bloodType: bloodTypes[i % bloodTypes.length],
+}))
+
+const patientColumns: CcTableColumn[] = [
+  { key: 'id', title: '就诊号', width: 90, align: 'right', filterable: true },
+  { key: 'name', title: '患者姓名', width: 120, fixed: 'left', filterable: true },
+  {
+    key: 'gender',
+    title: '性别',
+    width: 80,
+    filterable: true,
+    filterType: 'select',
+    filterOptions: genders.map(g => ({ label: g, value: g })),
+  },
+  { key: 'age', title: '年龄', width: 80, align: 'right' },
+  {
+    key: 'dept',
+    title: '科室',
+    width: 110,
+    filterable: true,
+    filterType: 'select',
+    filterOptions: departments.map(d => ({ label: d, value: d })),
+  },
+  {
+    key: 'status',
+    title: '状态',
+    width: 100,
+    filterable: true,
+    filterType: 'select',
+    filterOptions: statuses.map(s => ({ label: s, value: s })),
+    slot: 'status',
+  },
+  { key: 'doctor', title: '主治医生', width: 110, filterable: true },
+  { key: 'nurse', title: '责任护士', width: 110, filterable: true },
+  {
+    key: 'ward',
+    title: '病房',
+    width: 100,
+    filterable: true,
+    filterType: 'select',
+    filterOptions: wards.map(w => ({ label: w, value: w })),
+  },
+  { key: 'bed', title: '床位', width: 90 },
+  { key: 'diagnosis', title: '诊断', width: 150, filterable: true },
+  { key: 'time', title: '就诊时间', width: 150 },
+  {
+    key: 'fee',
+    title: '费用',
+    width: 100,
+    align: 'right',
+    formatter: value => `¥ ${Number(value).toFixed(2)}`,
+  },
+  {
+    key: 'insurance',
+    title: '医保类型',
+    width: 110,
+    filterable: true,
+    filterType: 'select',
+    filterOptions: insuranceTypes.map(t => ({ label: t, value: t })),
+  },
+  { key: 'phone', title: '联系电话', width: 140, filterable: true },
+  {
+    key: 'bloodType',
+    title: '血型',
+    width: 90,
+    filterable: true,
+    filterType: 'select',
+    filterOptions: bloodTypes.map(b => ({ label: b, value: b })),
+  },
+  { key: 'action', title: '操作', width: 100, fixed: 'right', slot: 'action' },
+]
+
+const selectedPatientKeys = ref<string[]>([])
+
+function viewPatient(row: Record<string, unknown>) {
+  alert(`查看患者：${String(row.name)}`)
+}
 </script>
 
 <template>
@@ -106,6 +221,7 @@ const typeScale = [
         <a href="#colors">Colors</a>
         <a href="#typography">Type</a>
         <a href="#components">Components</a>
+        <a href="#table">Table</a>
         <a href="#pricing">Pricing</a>
         <a href="#dashboard">Dashboard</a>
       </nav>
@@ -322,10 +438,40 @@ const typeScale = [
       </div>
     </section>
 
+    <!-- ============ Data table (CcTable) ============ -->
+    <section id="table" class="band band--soft">
+      <div class="container">
+        <p class="cc-text-micro-cap section-eyebrow">04 · Data table</p>
+        <h2 class="section-title cc-text-display-xl">CcTable with column management</h2>
+        <p class="section-desc cc-text-body-md">
+          拖拽表头可调整列顺序 · 「列设置」可切换列显示与表格密度（大 / 中 / 小）· 左右固定列不可拖动或隐藏 ·
+          支持多条件筛选、分页与行多选。列顺序 / 显隐 / 密度自动保存到 <code>localStorage</code>。
+        </p>
+
+        <div class="table-demo">
+          <CcTable
+            :columns="patientColumns"
+            :data="patients"
+            row-key="id"
+            table-key="demo-patients"
+            v-model:selected-keys="selectedPatientKeys"
+          >
+            <template #status="{ value }">
+              <CcTag :variant="statusTagVariant[String(value)] ?? 'outline'" size="sm">{{ value }}</CcTag>
+            </template>
+            <template #action="{ row }">
+              <CcButton size="sm" variant="secondary" @click="viewPatient(row)">详情</CcButton>
+            </template>
+          </CcTable>
+          <p class="cc-text-caption table-demo__hint">已选 {{ selectedPatientKeys.length }} 行</p>
+        </div>
+      </div>
+    </section>
+
     <!-- ============ Pricing (cards) ============ -->
     <section id="pricing" class="band">
       <div class="container">
-        <p class="cc-text-micro-cap section-eyebrow">04 · Cards</p>
+        <p class="cc-text-micro-cap section-eyebrow">05 · Cards</p>
         <h2 class="section-title cc-text-display-xl">Feature & pricing cards</h2>
         <p class="section-desc cc-text-body-md">
           <code>card-feature-light</code>, <code>card-pricing</code>, <code>card-pricing-featured</code>
@@ -399,7 +545,7 @@ const typeScale = [
     <!-- ============ Dashboard (dark track) ============ -->
     <section id="dashboard" class="band band--dark">
       <div class="container">
-        <p class="cc-text-micro-cap section-eyebrow band--dark__eyebrow">05 · Dark track</p>
+        <p class="cc-text-micro-cap section-eyebrow band--dark__eyebrow">06 · Dark track</p>
         <h2 class="section-title cc-text-display-xl band--dark__title">Dashboard surfaces</h2>
         <p class="section-desc cc-text-body-md band--dark__desc">
           The dashboard flips polarity to the deep-navy shell
@@ -1165,6 +1311,23 @@ const typeScale = [
   .footer__inner {
     flex-direction: column;
     gap: var(--cc-space-xl);
+  }
+}
+
+/* ---- CcTable demo ---- */
+.table-demo {
+  margin-top: 32px;
+}
+
+.table-demo__hint {
+  margin-top: 16px;
+  text-align: right;
+  color: var(--cc-ink-mute);
+}
+
+@media (max-width: 720px) {
+  .table-demo__hint {
+    text-align: left;
   }
 }
 </style>

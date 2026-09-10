@@ -26,6 +26,7 @@ import CcModal from './components/Modal/CcModal.vue'
 import CcTooltip from './components/Tooltip/CcTooltip.vue'
 import CcSpinner from './components/Spinner/CcSpinner.vue'
 import CcDivider from './components/Divider/CcDivider.vue'
+import CcTable from './components/Table/CcTable.vue'
 
 export {
   CcButton,
@@ -43,9 +44,11 @@ export {
   CcTooltip,
   CcSpinner,
   CcDivider,
+  CcTable,
 }
 
 export type { CcSelectOption } from './components/Select/CcSelect.vue'
+export type { CcTableColumn, CcTableDensity } from './components/Table/CcTable.vue'
 
 /** Design tokens (CSS custom properties) — import once in your app entry */
 import './styles/tokens.css'
@@ -69,6 +72,7 @@ export function install(app: App) {
     ['CcTooltip', CcTooltip],
     ['CcSpinner', CcSpinner],
     ['CcDivider', CcDivider],
+    ['CcTable', CcTable],
   ]
   for (const [name, component] of registry) {
     app.component(name, component as never)
@@ -93,5 +97,6 @@ export default {
     CcTooltip,
     CcSpinner,
     CcDivider,
+    CcTable,
   },
 }
