@@ -7,12 +7,15 @@ import { reactive, ref } from 'vue'
 import {
   CcAlert,
   CcBadge,
+  CcBarChart,
   CcButton,
   CcCard,
   CcCheckbox,
   CcDivider,
   CcInput,
+  CcLineChart,
   CcModal,
+  CcPieChart,
   CcRadio,
   CcSelect,
   CcSwitch,
@@ -22,6 +25,24 @@ import {
   CcTooltip,
 } from './index'
 import type { CcTableColumn } from './index'
+
+/* ------------------------------------------------------------------ */
+/* Chart demo data                                                     */
+/* ------------------------------------------------------------------ */
+const chartBarCategories = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+const chartBarSeries = [
+  { name: '门诊', data: [320, 402, 388, 456, 512, 236, 198] },
+  { name: '住院', data: [120, 132, 154, 168, 190, 96, 72] },
+]
+const chartPieData = [
+  { name: '内科', value: 428 },
+  { name: '外科', value: 356 },
+  { name: '儿科', value: 244 },
+  { name: '妇产科', value: 198 },
+  { name: '急诊', value: 152 },
+]
+const chartLineCategories = ['9/1', '9/2', '9/3', '9/4', '9/5', '9/6', '9/7', '9/8', '9/9', '9/10']
+const chartLineSeries = [{ name: '营收', data: [128, 146, 135, 172, 168, 194, 188, 216, 208, 242] }]
 
 /* ------------------------------------------------------------------ */
 /* Demo state                                                          */
@@ -580,6 +601,45 @@ function viewPatient(row: Record<string, unknown>) {
             </tbody>
           </table>
         </CcCard>
+
+        <div class="charts-grid">
+          <CcCard variant="dashboard" class="chart-card">
+            <div class="chart-card__header">
+              <span class="cc-text-micro-cap">Daily visits</span>
+              <CcTag variant="dark">7 days</CcTag>
+            </div>
+            <CcBarChart
+              :categories="chartBarCategories"
+              :series="chartBarSeries"
+              :height="250"
+              :dark="true"
+              :stacked="true"
+              :rounded="true"
+            />
+          </CcCard>
+
+          <CcCard variant="dashboard" class="chart-card">
+            <div class="chart-card__header">
+              <span class="cc-text-micro-cap">Patients by department</span>
+            </div>
+            <CcPieChart :data="chartPieData" :height="250" :dark="true" :donut="true" />
+          </CcCard>
+
+          <CcCard variant="dashboard" class="chart-card">
+            <div class="chart-card__header">
+              <span class="cc-text-micro-cap">Revenue trend</span>
+              <CcTag variant="dark">30 days</CcTag>
+            </div>
+            <CcLineChart
+              :categories="chartLineCategories"
+              :series="chartLineSeries"
+              :height="250"
+              :dark="true"
+              :area="true"
+              :smooth="true"
+            />
+          </CcCard>
+        </div>
       </div>
     </section>
 
@@ -1137,6 +1197,35 @@ function viewPatient(row: Record<string, unknown>) {
 
 .table-card {
   padding: var(--cc-space-xl);
+}
+
+.charts-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--cc-space-lg);
+  margin-top: var(--cc-space-xl);
+}
+
+.chart-card {
+  padding: var(--cc-space-lg);
+  min-width: 0;
+}
+
+.chart-card__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--cc-space-md);
+}
+
+.chart-card__header span {
+  color: var(--cc-ink-mute);
+}
+
+@media (max-width: 960px) {
+  .charts-grid {
+    grid-template-columns: 1fr;
+  }
 }
 
 .table-card__header {

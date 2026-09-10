@@ -1,5 +1,5 @@
-/**
- * Common Component Library — Vue 3 + TypeScript
+﻿/**
+ * Common Component Library 鈥?Vue 3 + TypeScript
  * Design language: Stripe-inspired, defined in /DESIGN.md
  *
  * Usage:
@@ -27,6 +27,9 @@ import CcTooltip from './components/Tooltip/CcTooltip.vue'
 import CcSpinner from './components/Spinner/CcSpinner.vue'
 import CcDivider from './components/Divider/CcDivider.vue'
 import CcTable from './components/Table/CcTable.vue'
+import CcBarChart from './components/Chart/CcBarChart.vue'
+import CcPieChart from './components/Chart/CcPieChart.vue'
+import CcLineChart from './components/Chart/CcLineChart.vue'
 
 export {
   CcButton,
@@ -45,12 +48,16 @@ export {
   CcSpinner,
   CcDivider,
   CcTable,
+  CcBarChart,
+  CcPieChart,
+  CcLineChart,
 }
 
 export type { CcSelectOption } from './components/Select/CcSelect.vue'
 export type { CcTableColumn, CcTableDensity } from './components/Table/CcTable.vue'
+export type { CcChartSeries, CcPieDatum } from './components/Chart/common'
 
-/** Design tokens (CSS custom properties) — import once in your app entry */
+/** Design tokens (CSS custom properties) 鈥?import once in your app entry */
 import './styles/tokens.css'
 import './styles/base.css'
 
@@ -73,6 +80,9 @@ export function install(app: App) {
     ['CcSpinner', CcSpinner],
     ['CcDivider', CcDivider],
     ['CcTable', CcTable],
+    ['CcBarChart', CcBarChart],
+    ['CcPieChart', CcPieChart],
+    ['CcLineChart', CcLineChart],
   ]
   for (const [name, component] of registry) {
     app.component(name, component as never)
@@ -98,5 +108,10 @@ export default {
     CcSpinner,
     CcDivider,
     CcTable,
+    CcBarChart,
+    CcPieChart,
+    CcLineChart,
   },
 }
+
+

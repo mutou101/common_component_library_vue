@@ -16,9 +16,9 @@ export default defineConfig({
       formats: ['es', 'umd'],
     },
     rollupOptions: {
-      external: ['vue'],
+      external: ['vue', /^echarts(\/|$)/],
       output: {
-        globals: { vue: 'Vue' },
+        globals: (id: string) => (id === 'vue' ? 'Vue' : 'echarts'),
         exports: 'named',
         assetFileNames: 'common-component-library-vue.[ext]',
       },
