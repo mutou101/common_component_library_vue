@@ -30,6 +30,7 @@ import CcTable from './components/Table/CcTable.vue'
 import CcBarChart from './components/Chart/CcBarChart.vue'
 import CcPieChart from './components/Chart/CcPieChart.vue'
 import CcLineChart from './components/Chart/CcLineChart.vue'
+import CcMenus from './components/Menus/CcMenus.vue'
 import CcThemeProvider from './components/ThemeProvider/CcThemeProvider.vue'
 
 export {
@@ -52,12 +53,14 @@ export {
   CcBarChart,
   CcPieChart,
   CcLineChart,
+  CcMenus,
   CcThemeProvider,
 }
 
 export type { CcSelectOption } from './components/Select/CcSelect.vue'
 export type { CcTableColumn, CcTableDensity } from './components/Table/CcTable.vue'
 export type { CcChartSeries, CcPieDatum } from './components/Chart/common'
+export type { CcMenuNode, CcMenusUser } from './components/Menus/CcMenus.vue'
 export type { CcTheme } from './theme'
 export { CC_THEMES, CC_THEME_LABELS, setTheme, getTheme, resetTheme } from './theme'
 
@@ -92,6 +95,7 @@ export function install(app: App) {
     ['CcBarChart', CcBarChart],
     ['CcPieChart', CcPieChart],
     ['CcLineChart', CcLineChart],
+    ['CcMenus', CcMenus],
     ['CcThemeProvider', CcThemeProvider],
   ]
   for (const [name, component] of registry) {
@@ -121,6 +125,7 @@ export default {
     CcBarChart,
     CcPieChart,
     CcLineChart,
+    CcMenus,
     CcThemeProvider,
   },
 }
