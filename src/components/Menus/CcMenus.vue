@@ -9,7 +9,7 @@
  * - 用户信息下拉：头像 + 昵称 + 主题风格切换（内置多主题）+ 退出登录
  * - 主题选择持久化到 localStorage（可通过 themeStorageKey 自定义键名）
  */
-import { computed, onMounted, ref, watch } from 'vue'
+import { computed, onMounted, onUnmounted, ref, watch } from 'vue'
 import { CC_THEMES, CC_THEME_LABELS, getTheme, setTheme, type CcTheme } from '../../theme'
 import CcMenuList from './CcMenuList.vue'
 import CcSelect from '../Select/CcSelect.vue'
@@ -35,6 +35,8 @@ export interface CcMenuNode {
 
 /** 用户信息（用于头像与下拉展示）。 */
 export interface CcMenusUser {
+  /** 角色名称（如：系统管理员）。 */
+  role?: string
   displayName?: string
   username?: string
   /** 用户头像图片地址；未提供时回退为姓名首字母圆形。 */
@@ -68,6 +70,7 @@ const props = withDefaults(
 const emit = defineEmits<{
   (e: 'menu-click', menu: CcMenuNode): void
   (e: 'logout'): void
+  (e: 'update:position', position: 'top' | 'left'): void
 }>()
 
 /* ------------------------------- 菜单树 ------------------------------- */
@@ -156,7 +159,50 @@ watch(theme, (next) => {
 
 const userOpen = ref(false)
 
-const userTitle = computed(() => props.user?.displayName ?? props.user?.username ?? '未命名用户')
+/** 顶部布局：当前 hover 展开下拉的菜单 Id（状态化控制，点击二级菜单后保持打开）。 */
+const topOpenId = ref<number | null>(null)
+
+/** mouseleave 延迟关闭定时器（防抖：快速划过缝隙/边界时不误关）。 */
+let topLeaveTimer: ReturnType<typeof setTimeout> | null = null
+
+function onTopMenuEnter(id: number): void {
+  if (topLeaveTimer) {
+    clearTimeout(topLeaveTimer)
+    topLeaveTimer = null
+  }
+  topOpenId.value = id
+}
+
+function onTopMenuLeave(): void {
+  if (topLeaveTimer) {
+    clearTimeout(topLeaveTimer)
+  }
+  topLeaveTimer = setTimeout(() => {
+    topOpenId.value = null
+  }, 120)
+}
+
+/** 组件根元素（用于点击外部关闭下拉）。 */
+const rootEl = ref<HTMLElement | null>(null)
+
+/** 点击组件外部时，关闭用户下拉与顶部二级下拉。 */
+function onClickOutside(event: MouseEvent): void {
+  if (!rootEl.value) {
+    return
+  }
+  const target = event.target as Node
+  if (rootEl.value.contains(target)) {
+    return
+  }
+  if (topLeaveTimer) {
+    clearTimeout(topLeaveTimer)
+    topLeaveTimer = null
+  }
+  userOpen.value = false
+  topOpenId.value = null
+}
+
+const userTitle = computed(() => props.user?.role ?? props.user?.displayName ?? props.user?.username ?? '未命名用户')
 const userInitial = computed(() => userTitle.value.charAt(0).toUpperCase())
 
 function onLogout(): void {
@@ -167,6 +213,7 @@ function onLogout(): void {
 /* ------------------------------- 生命周期 ------------------------------- */
 
 onMounted(() => {
+  document.addEventListener('click', onClickOutside)
   const saved = localStorage.getItem(props.themeStorageKey)
   if (saved && (CC_THEMES as readonly string[]).includes(saved)) {
     theme.value = saved as CcTheme
@@ -187,10 +234,17 @@ onMounted(() => {
     expandedIds.value = collect(tree.value)
   }
 })
+
+onUnmounted(() => {
+  if (topLeaveTimer) {
+    clearTimeout(topLeaveTimer)
+  }
+  document.removeEventListener('click', onClickOutside)
+})
 </script>
 
 <template>
-  <div class="cc-menus" :class="`cc-menus--${position}`">
+  <div ref="rootEl" class="cc-menus" :class="`cc-menus--${position}`">
     <!-- 品牌区：公司 Logo 插槽 -->
     <div class="cc-menus__brand">
       <slot name="logo">
@@ -216,10 +270,16 @@ onMounted(() => {
         </template>
       </CcMenuList>
 
-      <!-- 顶部布局：横排一级 + hover 二级下拉 -->
+      <!-- 顶部布局：横排一级 + hover 二级下拉（状态化控制，点击二级后保持打开） -->
       <template v-else>
         <ul class="cc-menus__topnav">
-          <li v-for="node in tree" :key="node.id" class="cc-menus__topnav-item">
+          <li
+            v-for="node in tree"
+            :key="node.id"
+            class="cc-menus__topnav-item"
+            @mouseenter="onTopMenuEnter(node.id)"
+            @mouseleave="onTopMenuLeave"
+          >
             <button
               type="button"
               class="cc-menus__topnav-btn"
@@ -229,6 +289,7 @@ onMounted(() => {
               <svg
                 v-if="hasChildren(node)"
                 class="cc-menus__caret"
+                :class="{ 'cc-menus__caret--open': topOpenId === node.id }"
                 width="12"
                 height="12"
                 viewBox="0 0 24 24"
@@ -239,7 +300,7 @@ onMounted(() => {
               </svg>
             </button>
 
-            <div v-if="hasChildren(node)" class="cc-menus__dropdown">
+            <div v-if="hasChildren(node) && topOpenId === node.id" class="cc-menus__dropdown">
               <CcMenuList
                 :nodes="node.children ?? []"
                 :expanded-ids="expandedIds"
@@ -294,8 +355,27 @@ onMounted(() => {
 
       <div v-if="userOpen" class="cc-menus__dropdown cc-menus__dropdown--user" role="menu">
         <div class="cc-menus__user-info">
-          <p class="cc-menus__user-name">{{ userTitle }}</p>
-          <p v-if="props.user?.username" class="cc-menus__user-account">{{ props.user.username }}</p>
+          <p class="cc-menus__user-name">
+            {{ userTitle }}<span v-if="props.user?.username" class="cc-menus__user-account"> · {{ props.user.username }}</span>
+          </p>
+        </div>
+
+        <div class="cc-menus__theme">
+          <p class="cc-menus__theme-label">菜单栏位置</p>
+          <div class="cc-menus__layout-options">
+            <button
+              type="button"
+              class="cc-menus__layout-option"
+              :class="{ 'is-active': position === 'left' }"
+              @click="emit('update:position', 'left')"
+            >左侧</button>
+            <button
+              type="button"
+              class="cc-menus__layout-option"
+              :class="{ 'is-active': position === 'top' }"
+              @click="emit('update:position', 'top')"
+            >顶部</button>
+          </div>
         </div>
 
         <div class="cc-menus__theme">
@@ -425,9 +505,8 @@ onMounted(() => {
 
 /* ---------- 下拉面板（顶部二级 + 用户） ---------- */
 .cc-menus__dropdown {
-  display: none;
   position: absolute;
-  top: calc(100% + 6px);
+  top: 100%;
   left: 0;
   min-width: 168px;
   padding: 6px;
@@ -436,10 +515,6 @@ onMounted(() => {
   background: var(--cc-canvas);
   box-shadow: var(--cc-shadow-level-2);
   z-index: 40;
-}
-
-.cc-menus__topnav-item:hover .cc-menus__dropdown {
-  display: block;
 }
 
 /* ---------- 用户信息 ---------- */
@@ -520,8 +595,9 @@ onMounted(() => {
 }
 
 .cc-menus__user-account {
-  margin: 4px 0 0;
-  font-size: 12px;
+  margin: 0;
+  font-size: 14px;
+  font-weight: 400;
   color: var(--cc-ink-mute);
 }
 
@@ -534,6 +610,38 @@ onMounted(() => {
   font-size: 12px;
   font-weight: 500;
   color: var(--cc-ink-mute);
+}
+
+/* ---------- 菜单栏位置切换 ---------- */
+.cc-menus__layout-options {
+  display: flex;
+  gap: 4px;
+  padding: 3px;
+  border-radius: 10px;
+  background: var(--cc-canvas-soft);
+}
+
+.cc-menus__layout-option {
+  flex: 1;
+  padding: 6px 0;
+  font-size: 12.5px;
+  font-weight: 500;
+  color: var(--cc-ink-mute);
+  background: transparent;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.15s ease, color 0.15s ease;
+}
+
+.cc-menus__layout-option:hover {
+  color: var(--cc-ink);
+}
+
+.cc-menus__layout-option.is-active {
+  color: var(--cc-primary-deep);
+  background: var(--cc-canvas);
+  box-shadow: var(--cc-shadow-level-1);
 }
 
 .cc-menus__logout {
