@@ -1,6 +1,6 @@
 {
   "name": "common_component_library_vue",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Vue 3 + TypeScript + Vite 通用组件库，视觉规范由 DESIGN.md（Stripe 风格）定义，包含 15 个可复用组件",
   "type": "module",
   "main": "./dist-lib/common-component-library-vue.umd.js",
@@ -12,6 +12,8 @@
       "import": "./dist-lib/common-component-library-vue.mjs",
       "require": "./dist-lib/common-component-library-vue.umd.js"
     },
+    "./style.css": "./dist-lib/common-component-library-vue.css",
+    "./dist-lib/*": "./dist-lib/*",
     "./styles/tokens.css": "./src/styles/tokens.css",
     "./styles/base.css": "./src/styles/base.css",
     "./DESIGN.md": "./DESIGN.md",
